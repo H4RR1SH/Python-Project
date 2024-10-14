@@ -1,3 +1,5 @@
+import pickle
+
 from main import AdAnalytic
 
 class NativeAdAnalytic(AdAnalytic):
@@ -7,7 +9,7 @@ class NativeAdAnalytic(AdAnalytic):
 
 class NonNativeAdAnalytic(AdAnalytic):
     def __init__(self, date, tag, sub_type, rating, cost, predicted_ctr):
-        super().__init__(date, tag, sub_type, "Non-Native", rating, cost, predicted_ctr)
+        super().__init__(date, tag, sub_type, "non-Native", rating, cost, predicted_ctr)
 
 
 class InApp(NativeAdAnalytic):
@@ -25,5 +27,14 @@ class Interstitial(NonNativeAdAnalytic):
         super().__init__(date, tag, "Interstitial", rating, cost, predicted_ctr)
 
 
-banner_ad_analytic = Banner("2022-11-15", "tagA", 2, 641, 86.06)
-print(banner_ad_analytic)
+
+f = open('data.csv','w')
+f.write("unique_id,date,tag,sub_type,type,rating,cost,predicted_ctr\n")
+
+o = open('AdAnalyticpkl638200305.dat', 'rb')
+objects = pickle.load(o)
+for obj in objects:
+    f.write(str(obj)+'\n')
+o.close()
+f.close()
+
